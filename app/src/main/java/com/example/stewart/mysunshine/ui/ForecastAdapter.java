@@ -1,15 +1,22 @@
 package com.example.stewart.mysunshine.ui;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.stewart.mysunshine.R;
 import com.example.stewart.mysunshine.model.Forecast;
+
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
+import java.util.Date;
 
 /**
  * Created by sstew5 on 1/28/16.
@@ -39,40 +46,38 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
         public ImageView mWeatherIcon;
         public TextView mDailyTempRange;
         public TextView mDayOfWeek;
-        public ViewHolder(RelativeLayout v) {
-            super(v);
-            mWeatherIcon = (ImageView) v.findViewById(R.id.weather_icon_image_view);
-            mDailyTempRange = (TextView) v.findViewById(R.id.day_temp_range_text_view);
-            mDayOfWeek = (TextView) v.findViewById(R.id.day_of_week_text_view);
+        public Context mContext;
+        public ViewHolder(LinearLayout linearLayout) {
+            super(linearLayout);
+            mWeatherIcon = (ImageView) linearLayout.findViewById(R.id.weather_icon_image_view);
+            mDailyTempRange = (TextView) linearLayout.findViewById(R.id.day_temp_range_text_view);
+            mDayOfWeek = (TextView) linearLayout.findViewById(R.id.day_of_week_text_view);
+            mContext = linearLayout.getContext();
         }
     }
 
-
     @Override
     public ForecastAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.daily_forecast_row, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        mWeatherIcon = (ImageView) v.findViewById(R.id.weather_icon_image_view);
-        m
-
-
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder((LinearLayout) LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.daily_forecast_row, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ForecastAdapter.ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        //set shit here
 
-//        holder.mTextView.setText(mDataset[position]);
+        //todo Image
+
+        holder.mDailyTempRange.setText(mForecast.getDayForecasts().get(position).getTemp().getMax() +
+                " | " + mForecast.getDayForecasts().get(position).getTemp().getMin());
+
+        //todo day of week might be wrong? not sure... need to try on device
+        String localDayOfWeek = DateUtils.formatDateTime(holder.mContext,
+                new DateTime(mForecast.getDayForecasts().get(position).getDt().intValue()*1000).getMillis(), DateUtils.FORMAT_SHOW_WEEKDAY);
+        holder.mDayOfWeek.setText(localDayOfWeek);
     }
 
     @Override
     public int getItemCount() {
-        return mForecast.getList().size();
+        return mForecast.getDayForecasts().size();
     }
 }

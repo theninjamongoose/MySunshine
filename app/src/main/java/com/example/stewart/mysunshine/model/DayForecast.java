@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Created by sstew5 on 1/28/16.
  */
-public class List {
+public class DayForecast {
     private Integer dt;
     private Temp temp;
     private Float pressure;
@@ -20,7 +20,6 @@ public class List {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     *
      * @return
      * The dt
      */
@@ -29,7 +28,6 @@ public class List {
     }
 
     /**
-     *
      * @param dt
      * The dt
      */

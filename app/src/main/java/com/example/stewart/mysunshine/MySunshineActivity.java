@@ -57,7 +57,7 @@ public class MySunshineActivity extends AppCompatActivity {
         sunshineService.getWeeklyForecast(zipCode, mode, units, days, new Callback<Forecast>() {
             @Override
             public void success(Forecast forecast, Response response) {
-                initForecastView(forecast);
+                showForecast(forecast);
             }
 
             @Override
@@ -72,10 +72,9 @@ public class MySunshineActivity extends AppCompatActivity {
         if(mForecastAdapter == null) {
             mForecastAdapter = new ForecastAdapter(forecast);
             mRecyclerView.setAdapter(mForecastAdapter);
+        } else {
+            mForecastAdapter.notifyDataSetChanged();
         }
-        mForecastAdapter.
-        mForecastAdapter.notifyDataSetChanged();
-
     }
 
     private void initToolbar() {

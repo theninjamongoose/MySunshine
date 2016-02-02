@@ -1,7 +1,10 @@
 package com.example.stewart.mysunshine.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,7 +15,8 @@ public class Forecast {
     private String cod;
     private Float message;
     private Integer cnt;
-    private java.util.List<com.example.stewart.mysunshine.model.List> list = new ArrayList<List>();
+    @SerializedName("list")
+    private List<DayForecast> dayForecasts = new ArrayList<DayForecast>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
@@ -90,19 +94,19 @@ public class Forecast {
     /**
      *
      * @return
-     * The list
+     * The dayForecast
      */
-    public java.util.List<com.example.stewart.mysunshine.model.List> getList() {
-        return list;
+    public List<DayForecast> getDayForecasts() {
+        return dayForecasts;
     }
 
     /**
      *
-     * @param list
-     * The list
+     * @param dayForecast
+     * The dayForecast
      */
-    public void setList(java.util.List<com.example.stewart.mysunshine.model.List> list) {
-        this.list = list;
+    public void setDayForecasts(List<DayForecast> dayForecast) {
+        this.dayForecasts = dayForecast;
     }
 
     public Map<String, Object> getAdditionalProperties() {
